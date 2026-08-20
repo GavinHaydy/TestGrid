@@ -1,0 +1,19 @@
+Name: gateway-api
+Host: 0.0.0.0
+Port: 8888
+
+# 各微服务地址
+Services:
+  - Name: Iam
+    Target: http://iam-api:8888
+    Prefix:
+      - user
+      - role
+      - permission
+
+Log:
+  ServiceName: gateway-api
+  Mode: console
+  Encoding: plain
+  TimeFormat: 2006-01-02 15:04:05
+  Path: logs

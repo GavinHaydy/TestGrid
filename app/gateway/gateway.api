@@ -1,0 +1,17 @@
+syntax = "v1"
+
+type (
+	// 通用响应
+	Response {
+		Code    int         `json:"code"`
+		Message string      `json:"message"`
+		Data    interface{} `json:"data"`
+	}
+)
+
+// 文档页面（不走网关转发，直接返回 HTML）
+service gateway-api {
+	@handler DocPage
+	get /docs returns (Response)
+}
+
