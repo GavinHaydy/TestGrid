@@ -1,0 +1,10 @@
+.git
+.github
+.logs
+.run
+docs
+tmp
+*.log
+*.pid
+docker-compose*.yml
+woodpecker-docker-compose.yml
