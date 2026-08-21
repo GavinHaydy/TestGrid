@@ -91,8 +91,8 @@ CREATE TABLE auto_plan_report (
                                   PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_report_id ON auto_plan_report (report_id);
-CREATE INDEX idx_team_id ON auto_plan_report (team_id);
+CREATE INDEX report_idx_report_id ON auto_plan_report (report_id);
+CREATE INDEX report_idx_team_id ON auto_plan_report (team_id);
 
 COMMENT ON TABLE auto_plan_report IS '自动化测试计划-报告表';
 
@@ -135,7 +135,7 @@ CREATE TABLE auto_plan_task_conf (
                                      PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_plan_id ON auto_plan_task_conf (plan_id);
+CREATE INDEX task_idx_plan_id ON auto_plan_task_conf (plan_id);
 
 COMMENT ON TABLE auto_plan_task_conf IS '自动化测试—普通任务配置表';
 
@@ -183,7 +183,7 @@ CREATE TABLE auto_plan_timed_task_conf (
                                                CHECK (task_close_time >= 0)
 );
 
-CREATE INDEX idx_plan_id
+CREATE INDEX task_conf_idx_plan_id
     ON auto_plan_timed_task_conf (plan_id);
 
 COMMENT ON TABLE auto_plan_timed_task_conf IS '自动化测试-定时任务配置表';
@@ -219,7 +219,7 @@ CREATE TABLE company (
                          PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_company_id
+CREATE INDEX company_idx_company_id
     ON company (company_id);
 
 COMMENT ON TABLE company IS '企业表';
@@ -257,7 +257,7 @@ CREATE TABLE element (
 CREATE INDEX idx_element_id
     ON element (element_id);
 
-CREATE INDEX idx_team_id
+CREATE INDEX ele_idx_team_id
     ON element (team_id);
 
 COMMENT ON TABLE element IS '元素表';
@@ -296,7 +296,7 @@ CREATE TABLE global_variable (
                                  PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_team_id
+CREATE INDEX gv_idx_team_id
     ON global_variable (team_id);
 
 COMMENT ON TABLE global_variable IS '全局变量表';
@@ -438,13 +438,13 @@ CREATE TABLE mock_target (
                              PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_target_id
+CREATE INDEX mt_idx_target_id
     ON mock_target (target_id);
 
-CREATE INDEX idx_plan_id
+CREATE INDEX mt_idx_plan_id
     ON mock_target (plan_id);
 
-CREATE INDEX idx_team_id
+CREATE INDEX mt_idx_team_id
     ON mock_target (team_id);
 
 COMMENT ON TABLE mock_target IS '创建目标';
@@ -486,7 +486,7 @@ CREATE TABLE mock_target_debug_log (
                                        PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_target_id
+CREATE INDEX mtl_idx_target_id
     ON mock_target_debug_log (target_id);
 
 COMMENT ON TABLE mock_target_debug_log IS 'mock目标调试日志表';
@@ -568,7 +568,7 @@ COMMENT ON COLUMN preinstall_conf.created_at IS '创建时间';
 COMMENT ON COLUMN preinstall_conf.updated_at IS '更新时间';
 COMMENT ON COLUMN preinstall_conf.deleted_at IS '删除时间';
 
-CREATE INDEX idx_preinstall_conf_team_id
+CREATE INDEX pc_idx_preinstall_conf_team_id
     ON preinstall_conf (team_id);
 
 DROP TABLE IF EXISTS public_function;
@@ -626,7 +626,7 @@ CREATE TABLE report_machine (
                                 deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_report_machine_report_id
+CREATE INDEX rm_idx_report_machine_report_id
     ON report_machine (report_id);
 
 COMMENT ON TABLE report_machine IS '报告压力机表';
@@ -656,7 +656,7 @@ CREATE TABLE role (
                       deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_role_id
+CREATE INDEX r_idx_role_id
     ON role (role_id);
 
 COMMENT ON TABLE role IS '角色表';
@@ -683,7 +683,7 @@ CREATE TABLE role_permission (
                                  deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_role_permission_role_id
+CREATE INDEX rp_idx_role_permission_role_id
     ON role_permission (role_id);
 
 COMMENT ON TABLE role_permission IS '角色权限表';
@@ -731,10 +731,10 @@ CREATE TABLE scene_variable (
                                 deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_scene_variable_team_id
+CREATE INDEX sv_idx_scene_variable_team_id
     ON scene_variable (team_id);
 
-CREATE INDEX idx_scene_variable_scene_id
+CREATE INDEX sv_idx_scene_variable_scene_id
     ON scene_variable (scene_id);
 
 COMMENT ON TABLE scene_variable IS '设置变量表';
@@ -762,7 +762,7 @@ CREATE TABLE setting (
                          deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_setting_user_id
+CREATE INDEX s_idx_setting_user_id
     ON setting (user_id);
 
 COMMENT ON TABLE setting IS '设置表';
@@ -793,7 +793,7 @@ CREATE TABLE sms_log (
                          deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_sms_log_type_mobile_verify_code
+CREATE INDEX sl_idx_sms_log_type_mobile_verify_code
     ON sms_log (
                 type,
                 mobile,
@@ -837,10 +837,10 @@ CREATE TABLE stress_plan (
                              deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_stress_plan_plan_id
+CREATE INDEX sp_idx_stress_plan_plan_id
     ON stress_plan (plan_id);
 
-CREATE INDEX idx_stress_plan_team_id
+CREATE INDEX sp_idx_stress_plan_team_id
     ON stress_plan (team_id);
 
 COMMENT ON TABLE stress_plan IS '性能计划表';
@@ -874,7 +874,7 @@ CREATE TABLE stress_plan_email (
                                    deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_stress_plan_email_plan_id
+CREATE INDEX spe_idx_stress_plan_email_plan_id
     ON stress_plan_email (plan_id);
 
 COMMENT ON TABLE stress_plan_email IS '性能计划收件人';
@@ -912,10 +912,10 @@ CREATE TABLE stress_plan_report (
                                     deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_stress_plan_report_report_id
+CREATE INDEX spr_idx_stress_plan_report_report_id
     ON stress_plan_report (report_id);
 
-CREATE INDEX idx_stress_plan_report_team_id
+CREATE INDEX spr_idx_stress_plan_report_team_id
     ON stress_plan_report (team_id);
 
 COMMENT ON TABLE stress_plan_report IS '性能测试报告表';
@@ -963,10 +963,10 @@ CREATE TABLE stress_plan_task_conf (
                                        deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_stress_plan_task_conf_plan_id
+CREATE INDEX sptc_idx_stress_plan_task_conf_plan_id
     ON stress_plan_task_conf (plan_id);
 
-CREATE INDEX idx_stress_plan_task_conf_scene_id
+CREATE INDEX stpc_idx_stress_plan_task_conf_scene_id
     ON stress_plan_task_conf (scene_id);
 
 COMMENT ON TABLE stress_plan_task_conf IS '性能计划—普通任务配置表';
@@ -1012,10 +1012,10 @@ CREATE TABLE stress_plan_timed_task_conf (
                                              deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_stress_plan_timed_task_conf_plan_id
+CREATE INDEX spttc_idx_stress_plan_timed_task_conf_plan_id
     ON stress_plan_timed_task_conf (plan_id);
 
-CREATE INDEX idx_stress_plan_timed_task_conf_scene_id
+CREATE INDEX stppc_idx_stress_plan_timed_task_conf_scene_id
     ON stress_plan_timed_task_conf (scene_id);
 
 COMMENT ON TABLE stress_plan_timed_task_conf IS '性能计划-定时任务配置表';
@@ -1069,13 +1069,13 @@ CREATE TABLE target (
                         deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_target_target_id
+CREATE INDEX t_idx_target_target_id
     ON target (target_id);
 
-CREATE INDEX idx_target_plan_id
+CREATE INDEX t_idx_target_plan_id
     ON target (plan_id);
 
-CREATE INDEX idx_target_team_id
+CREATE INDEX t_idx_target_team_id
     ON target (team_id);
 
 COMMENT ON TABLE target IS '创建目标';
@@ -1115,7 +1115,7 @@ CREATE TABLE target_debug_log (
                                   deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_target_debug_log_target_id
+CREATE INDEX tdl_idx_target_debug_log_target_id
     ON target_debug_log (target_id);
 
 COMMENT ON TABLE target_debug_log IS '目标调试日志表';
@@ -1149,7 +1149,7 @@ CREATE TABLE team (
                       deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_team_team_id
+CREATE INDEX team_idx_team_team_id
     ON team (team_id);
 
 COMMENT ON TABLE team IS '团队表';
@@ -1184,7 +1184,7 @@ CREATE TABLE team_env (
                           deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_team_env_team_id
+CREATE INDEX te_idx_team_env_team_id
     ON team_env (team_id);
 
 COMMENT ON TABLE team_env IS '环境管理表';
@@ -1217,10 +1217,10 @@ CREATE TABLE team_env_database (
                                    deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_team_env_database_team_id
+CREATE INDEX ted_idx_team_env_database_team_id
     ON team_env_database (team_id);
 
-CREATE INDEX idx_team_env_database_team_env_id
+CREATE INDEX ted_idx_team_env_database_team_env_id
     ON team_env_database (team_env_id);
 
 COMMENT ON TABLE team_env_database IS 'Sql数据库服务基础信息表';
@@ -1255,7 +1255,7 @@ CREATE TABLE team_env_service (
                                   deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idxx_team_id
+CREATE INDEX tes_idx_team_id
     ON team_env_service (team_id);
 
 COMMENT ON TABLE team_env_service IS '团队环境服务管理';
@@ -1281,7 +1281,7 @@ CREATE TABLE team_user_queue (
                                  deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_team_user_queue_team_id
+CREATE INDEX tuq_idx_team_user_queue_team_id
     ON team_user_queue (team_id);
 
 COMMENT ON TABLE team_user_queue IS '邀请待注册队列';
@@ -1307,7 +1307,7 @@ CREATE TABLE third_notice (
                               deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_third_notice_notice_id
+CREATE INDEX tn_idx_third_notice_notice_id
     ON third_notice (notice_id);
 
 COMMENT ON TABLE third_notice IS '三方通知设置';
@@ -1353,7 +1353,7 @@ CREATE TABLE third_notice_group (
                                     deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_third_notice_group_group_id
+CREATE INDEX tng_idx_third_notice_group_group_id
     ON third_notice_group (group_id);
 
 COMMENT ON TABLE third_notice_group IS '三方通知组表';
@@ -1379,7 +1379,7 @@ CREATE TABLE third_notice_group_event (
                                           deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_third_notice_group_event_group_id
+CREATE INDEX tnge_idx_third_notice_group_event_group_id
     ON third_notice_group_event (group_id);
 
 COMMENT ON TABLE third_notice_group_event IS '三方通知组触发事件表';
@@ -1405,7 +1405,7 @@ CREATE TABLE third_notice_group_relate (
                                            deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_third_notice_group_relate_notice_id
+CREATE INDEX tngr_idx_third_notice_group_relate_notice_id
     ON third_notice_group_relate (notice_id);
 
 COMMENT ON TABLE third_notice_group_relate IS '三方通知组通知关联表';
@@ -1439,10 +1439,10 @@ CREATE TABLE ui_plan (
                          deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_plan_plan_id
+CREATE INDEX up_idx_ui_plan_plan_id
     ON ui_plan (plan_id);
 
-CREATE INDEX idx_ui_plan_team_id
+CREATE INDEX up_idx_ui_plan_team_id
     ON ui_plan (team_id);
 
 COMMENT ON TABLE ui_plan IS 'UI计划表';
@@ -1488,10 +1488,10 @@ CREATE TABLE ui_plan_report (
                                 deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_plan_report_report_id
+CREATE INDEX upr_idx_ui_plan_report_report_id
     ON ui_plan_report (report_id);
 
-CREATE INDEX idx_ui_plan_report_team_id
+CREATE INDEX upr_idx_ui_plan_report_team_id
     ON ui_plan_report (team_id);
 
 COMMENT ON TABLE ui_plan_report IS 'UI自动化测试计划-报告表';
@@ -1530,7 +1530,7 @@ CREATE TABLE ui_plan_task_conf (
                                    deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_plan_task_conf_plan_id
+CREATE INDEX uptc_idx_ui_plan_task_conf_plan_id
     ON ui_plan_task_conf (plan_id);
 
 COMMENT ON TABLE ui_plan_task_conf IS 'UI自动化测试—普通任务配置表';
@@ -1567,7 +1567,7 @@ CREATE TABLE ui_plan_timed_task_conf (
                                          deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_plan_timed_task_conf_plan_id
+CREATE INDEX upttc_idx_ui_plan_timed_task_conf_plan_id
     ON ui_plan_timed_task_conf (plan_id);
 
 COMMENT ON TABLE ui_plan_timed_task_conf IS 'UI自动化测试-定时任务配置表';
@@ -1615,10 +1615,10 @@ CREATE TABLE ui_scene (
                           deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_scene_scene_id
+CREATE INDEX us_idx_ui_scene_scene_id
     ON ui_scene (scene_id);
 
-CREATE INDEX idx_ui_scene_team_id
+CREATE INDEX us_idx_ui_scene_team_id
     ON ui_scene (team_id);
 
 COMMENT ON TABLE ui_scene IS 'UI自动化场景';
@@ -1658,10 +1658,10 @@ CREATE TABLE ui_scene_element (
                                   deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_scene_element_scene_id
+CREATE INDEX use_idx_ui_scene_element_scene_id
     ON ui_scene_element (scene_id);
 
-CREATE INDEX idx_ui_scene_element_team_id
+CREATE INDEX use_idx_ui_scene_element_team_id
     ON ui_scene_element (team_id);
 
 COMMENT ON TABLE ui_scene_element IS 'UI自动化场景元素关联表';
@@ -1693,10 +1693,10 @@ CREATE TABLE ui_scene_operator (
                                    deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_scene_operator_scene_id
+CREATE INDEX uso_idx_ui_scene_operator_scene_id
     ON ui_scene_operator (scene_id);
 
-CREATE INDEX idx_ui_scene_operator_operator_id
+CREATE INDEX uso_idx_ui_scene_operator_operator_id
     ON ui_scene_operator (operator_id);
 
 COMMENT ON TABLE ui_scene_operator IS 'UI自动化场景步骤';
@@ -1728,10 +1728,10 @@ CREATE TABLE ui_scene_sync (
                                deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_scene_sync_scene_id
+CREATE INDEX uss_idx_ui_scene_sync_scene_id
     ON ui_scene_sync (scene_id);
 
-CREATE INDEX idx_ui_scene_sync_team_id
+CREATE INDEX uss_idx_ui_scene_sync_team_id
     ON ui_scene_sync (team_id);
 
 COMMENT ON TABLE ui_scene_sync IS 'UI场景同步关系表';
@@ -1757,10 +1757,10 @@ CREATE TABLE ui_scene_trash (
                                 deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_ui_scene_trash_scene_id
+CREATE INDEX ust_idx_ui_scene_trash_scene_id
     ON ui_scene_trash (scene_id);
 
-CREATE INDEX idx_ui_scene_trash_team_id
+CREATE INDEX ust_idx_ui_scene_trash_team_id
     ON ui_scene_trash (team_id);
 
 COMMENT ON TABLE ui_scene_trash IS 'UI自动化场景回收站';
@@ -1792,7 +1792,7 @@ CREATE TABLE users (
                         deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_user_user_id
+CREATE INDEX users_idx_user_user_id
     ON users (user_id);
 
 COMMENT ON TABLE users IS '用户表';
@@ -1825,7 +1825,7 @@ CREATE TABLE user_collect_info (
                                    deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_user_collect_info_user_id
+CREATE INDEX uci_idx_user_collect_info_user_id
     ON user_collect_info (user_id);
 
 COMMENT ON TABLE user_collect_info IS '用户收集信息';
@@ -1854,7 +1854,7 @@ CREATE TABLE user_company (
                               deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_user_company_company_id
+CREATE INDEX uc_idx_user_company_company_id
     ON user_company (company_id);
 
 COMMENT ON TABLE user_company IS '用户企业关系表';
@@ -1884,7 +1884,7 @@ CREATE TABLE user_role (
                            deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_user_role_role_id
+CREATE INDEX ur_idx_user_role_role_id
     ON user_role (role_id);
 
 COMMENT ON TABLE user_role IS '用户角色关联表（企业角色、团队角色）';
@@ -1916,7 +1916,7 @@ CREATE TABLE user_team (
                            deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_user_team_team_id
+CREATE INDEX ut_idx_user_team_team_id
     ON user_team (team_id);
 
 COMMENT ON TABLE user_team IS '用户团队关系表';
@@ -1945,7 +1945,7 @@ CREATE TABLE user_team_collection (
                                       deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_user_team_collection_user_id
+CREATE INDEX utc_idx_user_team_collection_user_id
     ON user_team_collection (user_id);
 
 COMMENT ON TABLE user_team_collection IS '用户收藏团队表';
@@ -1973,10 +1973,10 @@ CREATE TABLE variable (
                           deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_variable_team_id
+CREATE INDEX v_idx_variable_team_id
     ON variable (team_id);
 
-CREATE INDEX idx_variable_scene_id
+CREATE INDEX v_idx_variable_scene_id
     ON variable (scene_id);
 
 COMMENT ON TABLE variable IS '设置变量表';
@@ -2009,10 +2009,10 @@ CREATE TABLE variable_import (
                                  deleted_at TIMESTAMP DEFAULT NULL
 );
 
-CREATE INDEX idx_variable_import_team_id
+CREATE INDEX vi_idx_variable_import_team_id
     ON variable_import (team_id);
 
-CREATE INDEX idx_variable_import_scene_id
+CREATE INDEX vi_idx_variable_import_scene_id
     ON variable_import (scene_id);
 
 COMMENT ON TABLE variable_import IS '导入变量表';
